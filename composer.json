@@ -1,0 +1,19 @@
+{
+  "name": "cigital/safetynet",
+  "description": "SafetyNet web component",
+  "authors": [
+    {
+      "name": "John Kozyrakis",
+      "email": "jkozyrakis@cigital.com"
+    },
+    {
+      "name": "Georgi Boiko",
+      "email": "gboiko@cigital.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Cigital\\Safetynet\\": "src/"
+    }
+  }
+}
