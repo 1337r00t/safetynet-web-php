@@ -35,8 +35,8 @@ class Noncer
     public function generate()
     {
         // generates a new nonce, use whatever lib you like
-
-        $nonce = base64_encode(openssl_random_pseudo_bytes(32));
+        $cstrong = true;
+        $nonce = base64_encode(openssl_random_pseudo_bytes(32, $cstrong));
 
         return $nonce;
     }
