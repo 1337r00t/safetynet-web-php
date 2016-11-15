@@ -14,8 +14,8 @@ class PayloadValidator
     protected $expected_package_name;
     /** @var string $expected_apk_cert_digest */
     protected $expected_apk_cert_digest;
-    /** @var string $expected_apk_digest */
-    protected $expected_apk_digest;
+    /** @var string $expected_apk_digest_list */
+    protected $expected_apk_digest_list;
 
     /** @var Session $session */
     protected $session;
@@ -26,14 +26,14 @@ class PayloadValidator
      * @param Session $session
      * @param string  $expected_package_name
      * @param string  $expected_apk_cert_digest
-     * @param string  $expected_apk_digest
+     * @param string  $expected_apk_digest_list
      */
-    public function __construct(Session $session, $expected_package_name, $expected_apk_cert_digest, $expected_apk_digest)
+    public function __construct(Session $session, $expected_package_name, $expected_apk_cert_digest, $expected_apk_digest_list)
     {
         $this->session = $session;
         $this->expected_package_name = $expected_package_name;
         $this->expected_apk_cert_digest = $expected_apk_cert_digest;
-        $this->expected_apk_digest = $expected_apk_digest;
+        $this->expected_apk_digest_list = $expected_apk_digest_list;
     }
 
     /**
@@ -55,9 +55,9 @@ class PayloadValidator
     /**
      * @return string
      */
-    public function getExpectedApkDigest()
+    public function getExpectedApkDigestslist()
     {
-        return $this->expected_apk_digest;
+        return $this->expected_apk_digest_list;
     }
 
     /**
@@ -178,12 +178,13 @@ class PayloadValidator
     protected function validateAPKDigest($received_apkDigestSha256)
     {
         $decoded_apkDigestSha256 = bin2hex(base64_decode($received_apkDigestSha256));
-        if (strcasecmp($this->expected_apk_digest, $decoded_apkDigestSha256) === 0) {
-            return true;
-        } else {
-            $this->payload_error_msg[] = "Invalid APK binary digest";
-            return false;
+        foreach ($this->expected_apk_digest_list as $expected_digest) {
+            if (strcasecmp($expected_digest, $decoded_apkDigestSha256) === 0) {
+                return true;
+            }
         }
+        $this->payload_error_msg[] = "Invalid APK binary digest";
+        return false;
     }
 
     /**

@@ -50,7 +50,7 @@ function validateJWS()
     $session = new Session();
     $payload_validator = new PayloadValidator(
         $session,
-        EXPECTED_PACKAGE_NAME, EXPECTED_APK_CERT_DIGEST, EXPECTED_APK_DIGEST
+        EXPECTED_PACKAGE_NAME, EXPECTED_APK_CERT_DIGEST, EXPECTED_APK_DIGEST_LIST
     );
 
     $jws = new JwsPayloadValidator($payload_validator, APIKEY, $_POST['jws']);

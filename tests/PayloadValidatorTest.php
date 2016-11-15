@@ -15,7 +15,7 @@ class PayloadValidatorTest extends PHPUnit_Framework_TestCase
             $session,
             "com.cigital.safetynetplayground",
             "3F745359AF412C424B3832846B4F4AF82ED878B28B0B0CFA8E429458A2F708E6",
-            "3bfca6699111810b8e8411d66518f50296f1e998175468892c31d07beeec837a"
+            ["3bfca6699111810b8e8411d66518f50296f1e998175468892c31d07beeec837a"]
         );
 
         // JWS Payload content
