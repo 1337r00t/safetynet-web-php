@@ -8,6 +8,8 @@ namespace Cigital\Safetynet;
  */
 class PayloadValidator
 {
+    /** @var string $payload_error_msg */
+    public $payload_error_msg = array();
     /** @var string $expected_package_name */
     protected $expected_package_name;
     /** @var string $expected_apk_cert_digest */
@@ -98,6 +100,7 @@ class PayloadValidator
         if (strcmp(base64_decode($nonce), base64_decode($received_nonce, true)) === 0) {
             return true;
         } else {
+            $this->payload_error_msg[] = "Invalid nonce";
             return false;
         }
 
@@ -121,6 +124,7 @@ class PayloadValidator
         if (($difference < 1000) && ($difference > 0)) {
             return true;
         } else {
+            $this->payload_error_msg[] = "Invalid timestamp";
             return false;
         }
     }
@@ -137,6 +141,7 @@ class PayloadValidator
         if (strcmp($this->expected_package_name, $received_apkPackageName) === 0) {
             return true;
         } else {
+            $this->payload_error_msg[] = "Invalid package name";
             return false;
         }
     }
@@ -158,6 +163,7 @@ class PayloadValidator
         ) {
             return true;
         } else {
+            $this->payload_error_msg[] = "Invalid APK certificate digest";
             return false;
         }
     }
@@ -175,6 +181,7 @@ class PayloadValidator
         if (strcasecmp($this->expected_apk_digest, $decoded_apkDigestSha256) === 0) {
             return true;
         } else {
+            $this->payload_error_msg[] = "Invalid APK binary digest";
             return false;
         }
     }
@@ -188,7 +195,13 @@ class PayloadValidator
      */
     protected function validateCtsProfileMatch($received_ctsProfileMatch)
     {
-        return $received_ctsProfileMatch;
+        if($received_ctsProfileMatch === true){
+            return true;
+        }
+        else{
+            $this->payload_error_msg[] = "ctsProfileMatch is false";
+            return false;
+        }
     }
 
     /**
@@ -200,6 +213,12 @@ class PayloadValidator
      */
     protected function validateBasicIntegrity($received_basicIntegrity)
     {
-        return $received_basicIntegrity;
+        if($received_basicIntegrity === true){
+            return true;
+        }
+        else{
+            $this->payload_error_msg[] = "basicIntegrity is false";
+            return false;
+        }
     }
 }

@@ -10,7 +10,13 @@ include(__DIR__ . '/settings.php');
 function invalidRequest($message = "Invalid request.")
 {
     http_response_code(500);
-    die($message);
+    if(is_array($message)){
+        $comma_separated = implode(",", $message);
+        die($comma_separated);
+    }
+    else{
+        die($message);
+    }
 }
 
 function customLog($message)
@@ -32,13 +38,13 @@ function call_unchecked_getGiftAPI()
 /**
  * Validate the JWS object in the POST parameters of any request. All API calls can use this.
  *
- * @return bool
+ * @return JwsPayloadValidator
  */
 
 function validateJWS()
 {
     if (!isset($_POST['jws']) || $_POST['jws'] == '') {
-        invalidRequest();
+        invalidRequest("JWS object not sent to server via POST");
     }
 
     $session = new Session();
@@ -51,7 +57,7 @@ function validateJWS()
 
     $session->destroy();
 
-    return $jws->isValid;
+    return $jws;
 }
 
 /**
@@ -73,8 +79,9 @@ function getNonceAPI()
  */
 function getGiftAPI()
 {
-    if (!validateJWS()) {
-        invalidRequest("Invalid JWS.");
+    $validatorResponse = validateJWS();
+    if (!$validatorResponse->isValid) {
+        invalidRequest($validatorResponse->error_msg);
     }
 
     call_unchecked_getGiftAPI();

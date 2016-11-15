@@ -24,6 +24,9 @@ class JwsPayloadValidator
     /** @var bool $isValid */
     public $isValid;
 
+    /** @var string $error_msg */
+    public $error_msg = array();
+
     /**
      * JwsPayloadValidator constructor.
      *
@@ -55,11 +58,13 @@ class JwsPayloadValidator
      */
     public function validate()
     {
-        if (!$this->payload_validator->validate($this->payload)) {
+        if (!$this->validateSignatureWithGoogle()) {
+            $this->error_msg = "Invalid JWS signature";
             return false;
         }
 
-        if (!$this->validateSignatureWithGoogle()) {
+        if (!$this->payload_validator->validate($this->payload)) {
+            $this->error_msg = $this->payload_validator->payload_error_msg;
             return false;
         }
 
