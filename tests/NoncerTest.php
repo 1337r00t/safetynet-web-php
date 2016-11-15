@@ -4,7 +4,8 @@ class NoncerTest extends PHPUnit_Framework_TestCase
 {
     public function testGenerate()
     {
-        $noncer = new \Cigital\Safetynet\Noncer();
+        $session = new \Cigital\Safetynet\Session();
+        $noncer = new \Cigital\Safetynet\Noncer($session);
 
         $nonce = $noncer->generate();
 

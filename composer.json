@@ -15,5 +15,8 @@
     "psr-4": {
       "Cigital\\Safetynet\\": "src/"
     }
+  },
+  "require": {
+    "phpunit/phpunit": "^5.6"
   }
 }

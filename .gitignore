@@ -1,2 +1,5 @@
 /vendor/
 /.idea/
+*.iml
+safetynet-web-php.iml
+composer.phar
