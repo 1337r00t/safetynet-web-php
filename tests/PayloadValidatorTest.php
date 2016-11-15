@@ -26,6 +26,7 @@ class PayloadValidatorTest extends PHPUnit_Framework_TestCase
                 'apkPackageName'             => 'com.cigital.safetynetplayground',
                 'apkDigestSha256'            => 'O/ymaZERgQuOhBHWZRj1Apbx6ZgXVGiJLDHQe+7sg3o=',
                 'ctsProfileMatch'            => true,
+                'basicIntegrity'             => true,
                 'extension'                  => 'CaHFPGuPgOZJ',
                 'apkCertificateDigestSha256' =>
                     array(

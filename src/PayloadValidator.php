@@ -72,6 +72,7 @@ class PayloadValidator
             "isAPKcertDigestValid" => $this->validateAPKcertDigest($payload['apkCertificateDigestSha256']),
             "isAPKpathDigestValid" => $this->validateAPKDigest($payload['apkDigestSha256']),
             "ctsProfileMatch"      => $this->validateCtsProfileMatch($payload['ctsProfileMatch']),
+            "basicIntegrity"       => $this->validateBasicIntegrity($payload['basicIntegrity']),
         ];
 
         // If all items in the validation array are True, return True.
@@ -188,5 +189,17 @@ class PayloadValidator
     protected function validateCtsProfileMatch($received_ctsProfileMatch)
     {
         return $received_ctsProfileMatch;
+    }
+
+    /**
+     * Return the result of the basicIntegrity check
+     *
+     * @param $received_basicIntegrity
+     *
+     * @return bool
+     */
+    protected function validateBasicIntegrity($received_basicIntegrity)
+    {
+        return $received_basicIntegrity;
     }
 }
